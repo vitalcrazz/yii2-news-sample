@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property string $content
- * @property string $published_at
+ * @property string $publication_date
  * @property integer $subject_id
  * @property integer $author_id
  *
@@ -33,9 +33,9 @@ class News extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'content', 'published_at'], 'required'],
+            [['name', 'content', 'publication_date'], 'required'],
             [['content'], 'string'],
-            [['published_at'], 'safe'],
+            [['publication_date'], 'safe'],
             [['subject_id', 'author_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
@@ -52,7 +52,7 @@ class News extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'content' => 'Content',
-            'published_at' => 'Published At',
+            'publication_date' => 'Publication Date',
             'subject_id' => 'Subject ID',
             'author_id' => 'Author ID',
         ];

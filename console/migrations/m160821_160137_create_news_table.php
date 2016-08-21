@@ -21,7 +21,7 @@ class m160821_160137_create_news_table extends Migration
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
             'content' => $this->text()->notNull(),
-            'published_at' => $this->dateTime()->notNull(),
+            'publication_date' => $this->date()->notNull(),
             'subject_id' => $this->integer(),
             'author_id' => $this->integer(),
         ]);

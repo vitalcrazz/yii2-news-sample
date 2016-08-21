@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'content:ntext',
-            'published_at',
+            'publication_date',
             'subject_id',
             'author_id',
         ],

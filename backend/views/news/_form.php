@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'published_at')->textInput() ?>
+    <?= $form->field($model, 'publication_date')->textInput() ?>
 
     <?= $form->field($model, 'subject_id')->textInput() ?>
 
