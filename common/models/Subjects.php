@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "subjects".
@@ -20,6 +21,15 @@ class Subjects extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'subjects';
+    }
+
+    public static function Items()
+    {
+        $items = self::find()
+            ->orderBy('name')
+            ->all();
+
+        return ArrayHelper::map($items, 'id', 'name');
     }
 
     /**

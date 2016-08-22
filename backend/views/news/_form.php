@@ -16,11 +16,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'publication_date')->textInput() ?>
+    <?= $form->field($model, 'publication_date')->widget(\yii\jui\DatePicker::classname(), [
+        'language' => 'ru',
+        'dateFormat' => 'yyyy-MM-dd',
+    ]) ?>
 
-    <?= $form->field($model, 'subject_id')->textInput() ?>
-
-    <?= $form->field($model, 'author_id')->textInput() ?>
+    <?= $form->field($model, 'subject_id')->dropDownList(\common\models\Subjects::Items()) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
