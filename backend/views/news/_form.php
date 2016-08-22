@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'publication_date')->widget(\yii\jui\DatePicker::classname(), [
         'language' => 'ru',
         'dateFormat' => 'yyyy-MM-dd',
+        'options' => ['class' => 'form-control'],
     ]) ?>
 
     <?= $form->field($model, 'subject_id')->dropDownList(\common\models\Subjects::Items()) ?>
