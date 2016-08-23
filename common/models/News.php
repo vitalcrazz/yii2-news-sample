@@ -50,11 +50,11 @@ class News extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'content' => 'Content',
-            'publication_date' => 'Publication Date',
-            'subject_id' => 'Subject ID',
-            'author_id' => 'Author ID',
+            'name' => 'Название',
+            'content' => 'Текст новости',
+            'publication_date' => 'Дата публикации',
+            'subject_id' => 'Тема',
+            'author_id' => 'Автор',
         ];
     }
 
