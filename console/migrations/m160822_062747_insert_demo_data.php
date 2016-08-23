@@ -26,9 +26,9 @@ class m160822_062747_insert_demo_data extends Migration
     {
         $this->delete('{{%user}}', ['username' => 'admin']);
 
-        $this->truncateTable('{{%subjects}}');
+        $this->delete('{{%news}}');
 
-        return false;
+        $this->delete('{{%subjects}}');
     }
 
     /*

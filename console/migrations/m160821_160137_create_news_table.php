@@ -26,6 +26,8 @@ class m160821_160137_create_news_table extends Migration
             'author_id' => $this->integer(),
         ]);
 
+        $this->createIndex('news-publication_date', '{{%news}}', 'publication_date');
+
         $this->addForeignKey('fk-news-subject_id', '{{%news}}', 'subject_id', '{{%subjects}}', 'id');
 
         $this->addForeignKey('fk-news-author_id', '{{%news}}', 'author_id', '{{%user}}', 'id');
