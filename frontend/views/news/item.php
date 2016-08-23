@@ -12,9 +12,10 @@ use yii\widgets\ListView;
 
 <div>
     <h3>
-        <?= Html::a(Html::encode($model->name), ['view', 'id' => $model->id]); ?>
+        <?= Html::encode($model->name); ?>
     </h3>
     <div>
-        <?= $model->content; ?>
+        <?= mb_strimwidth($model->content, 0, 256, '...', 'UTF-8'); ?>
+        <?= Html::a('Читать далее', ['view', 'id' => $model->id]); ?>
     </div>
 </div>
