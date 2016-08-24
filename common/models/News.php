@@ -4,6 +4,9 @@ namespace common\models;
 
 use Yii;
 use yii\db\ActiveQuery;
+use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "news".
@@ -14,6 +17,8 @@ use yii\db\ActiveQuery;
  * @property string $publication_date
  * @property integer $subject_id
  * @property integer $author_id
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * @property User $author
  * @property Subjects $subject
@@ -25,12 +30,69 @@ class News extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'news';
+        return '{{%news}}';
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function find()
     {
         return new NewsQuery(get_called_class());
+    }
+
+    const COUNT_BY_SUBJECT_CACHE = 'news_count_by_subject';
+
+    public static function countBySubjects()
+    {
+        $countArr = Yii::$app->cache->get(self::COUNT_BY_SUBJECT_CACHE);
+        if($countArr !== false) {
+            return $countArr;
+        }
+
+        $counts = (new \yii\db\Query())
+            ->select(new Expression('subject_id, COUNT(*) AS count'))
+            ->from(self::tableName())
+            ->groupBy('subject_id')
+            ->all();
+        $countArr = ArrayHelper::map($counts, 'subject_id', 'count');
+
+        Yii::$app->cache->set(self::COUNT_BY_SUBJECT_CACHE, $countArr, 0, new \yii\caching\DbDependency([
+            'sql' => 'SELECT MAX(updated_at) FROM news',
+        ]));
+
+        return $countArr;
+    }
+
+    public static function getMonths()
+    {
+        $months = (new \yii\db\Query())
+            ->select(new Expression('YEAR(publication_date) AS year, MONTH(publication_date) AS month, COUNT(*) AS count'))
+            ->from(self::tableName())
+            ->groupBy(new Expression('YEAR(publication_date), MONTH(publication_date)'))
+            ->orderBy(['year' => SORT_DESC, 'month' => SORT_DESC])
+            ->all();
+        return $months;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+
+        Yii::$app->cache->delete(self::COUNT_BY_SUBJECT_CACHE);
     }
 
     /**
@@ -114,10 +176,10 @@ class NewsQuery extends ActiveQuery
     public function andWhereYearAndMonth($year, $month)
     {
         if($year) {
-            $this->andWhere(new \yii\db\Expression('YEAR(publication_date) = :year', [':year' => $year]));
+            $this->andWhere(new Expression('YEAR(publication_date) = :year', [':year' => $year]));
 
             if($month) {
-                $this->andWhere(new \yii\db\Expression('MONTH(publication_date) = :month', [':month' => $month]));
+                $this->andWhere(new Expression('MONTH(publication_date) = :month', [':month' => $month]));
             }
         }
         return $this;

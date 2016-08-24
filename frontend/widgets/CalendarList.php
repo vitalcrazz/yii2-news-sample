@@ -4,7 +4,7 @@ namespace frontend\widgets;
 
 use Yii;
 use yii\helpers\Html;
-use yii\db\Expression;
+use common\models\News;
 
 class CalendarList extends \yii\base\Widget
 {
@@ -12,12 +12,7 @@ class CalendarList extends \yii\base\Widget
     {
         parent::init();
 
-        $months = (new \yii\db\Query())
-            ->select(new Expression('YEAR(publication_date) AS year, MONTH(publication_date) AS month, COUNT(*) AS count'))
-            ->from('{{%news}}')
-            ->groupBy(new Expression('YEAR(publication_date), MONTH(publication_date)'))
-            ->orderBy(['year' => SORT_DESC, 'month' => SORT_DESC])
-            ->all();
+        $months = News::getMonths();
 
         if(count($months) > 0) {
             $this->renderModels($months);

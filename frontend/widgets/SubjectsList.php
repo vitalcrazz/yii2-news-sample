@@ -28,10 +28,10 @@ class SubjectsList extends \yii\base\Widget
     protected function renderModels($models)
     {
         $content = '';
+        $countArr = News::countBySubjects();
         foreach ($models as $model) {
-            $count = News::find()
-                ->where(['subject_id' => $model->id])
-                ->count();
+            $key = $model->id;
+            $count = array_key_exists($key, $countArr) ? $countArr[$key] : 0;
 
             $itemContent = Html::tag('span', $count, ['class' => 'badge']) . $model->name;
             $content .= Html::a($itemContent, ['/news/index', 'subject' => $model->id], ['class' => 'list-group-item']);

@@ -15,6 +15,8 @@ class m160821_160137_create_news_table extends Migration
         $this->createTable('{{%subjects}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull()->unique(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ]);
 
         $this->createTable('{{%news}}', [
@@ -24,6 +26,8 @@ class m160821_160137_create_news_table extends Migration
             'publication_date' => $this->date()->notNull(),
             'subject_id' => $this->integer(),
             'author_id' => $this->integer(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ]);
 
         $this->createIndex('news-publication_date', '{{%news}}', 'publication_date');

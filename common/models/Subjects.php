@@ -4,12 +4,15 @@ namespace common\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "subjects".
  *
  * @property integer $id
  * @property string $name
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * @property News[] $news
  */
@@ -21,6 +24,16 @@ class Subjects extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'subjects';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
     }
 
     public static function Items()

@@ -21,6 +21,7 @@ class NewsController extends Controller
     public function actionIndex($subject = null, $year = null, $month = null)
     {
         $query = News::find()
+            ->with('subject')
             ->andWhereSubject($subject)
             ->andWhereYearAndMonth($year, $month)
             ->orderBy(['publication_date' => SORT_DESC]);
