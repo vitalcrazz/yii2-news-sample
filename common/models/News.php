@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "news".
@@ -25,6 +26,11 @@ class News extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'news';
+    }
+
+    public static function find()
+    {
+        return new NewsQuery(get_called_class());
     }
 
     /**
@@ -72,5 +78,48 @@ class News extends \yii\db\ActiveRecord
     public function getSubject()
     {
         return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
+    }
+}
+
+
+/**
+ * NewsQuery represents an ActiveQuery for the News model
+ *
+ * @package common\models
+ *
+ */
+class NewsQuery extends ActiveQuery
+{
+    /**
+     * Adds WHERE condition for filtering by subject, checks if parameters are empty
+     *
+     * @param $subject
+     * @return $this
+     */
+    public function andWhereSubject($subject)
+    {
+        if($subject) {
+            $this->andWhere(['subject_id' => $subject]);
+        }
+        return $this;
+    }
+
+    /**
+     * Adds WHERE condition for filtering by year and month, checks if parameters are empty
+     *
+     * @param $year
+     * @param $month
+     * @return $this
+     */
+    public function andWhereYearAndMonth($year, $month)
+    {
+        if($year) {
+            $this->andWhere(new \yii\db\Expression('YEAR(publication_date) = :year', [':year' => $year]));
+
+            if($month) {
+                $this->andWhere(new \yii\db\Expression('MONTH(publication_date) = :month', [':month' => $month]));
+            }
+        }
+        return $this;
     }
 }

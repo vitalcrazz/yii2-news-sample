@@ -17,15 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Создать тему', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php if($message) {
-        echo yii\bootstrap\Alert::widget([
-            'options' => [
-                'class' => 'alert-warning',
-            ],
-            'body' => $message,
-        ]);
-    } ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [

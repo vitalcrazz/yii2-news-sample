@@ -18,10 +18,15 @@ class NewsController extends Controller
      * Lists all News models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($subject = null, $year = null, $month = null)
     {
+        $query = News::find()
+            ->andWhereSubject($subject)
+            ->andWhereYearAndMonth($year, $month)
+            ->orderBy(['publication_date' => SORT_DESC]);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => News::find()->orderBy(['publication_date' => SORT_DESC]),
+            'query' => $query,
             'pagination' => [
                 'pageSize' => 5,
             ],

@@ -39,22 +39,18 @@ class SubjectsController extends Controller
         ];
     }
 
-    private function getDataProvider()
-    {
-        return new ActiveDataProvider([
-            'query' => Subjects::find(),
-        ]);
-    }
-
     /**
      * Lists all Subjects models.
      * @return mixed
      */
     public function actionIndex()
     {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Subjects::find(),
+        ]);
+
         return $this->render('index', [
-            'dataProvider' => $this->getDataProvider(),
-            'message' => null,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -119,12 +115,7 @@ class SubjectsController extends Controller
             $this->findModel($id)->delete();
         }
         catch (\yii\db\IntegrityException $e) {
-            $message = 'Невозможно удалить тему пока на нее ссылаются существующие новости';
-
-            return $this->render('index', [
-                'dataProvider' => $this->getDataProvider(),
-                'message' => $message,
-            ]);
+            Yii::$app->session->setFlash('error', 'Невозможно удалить тему, пока на нее ссылаются существующие новости');
         }
 
         return $this->redirect(['index']);
