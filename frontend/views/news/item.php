@@ -14,8 +14,14 @@ use yii\widgets\ListView;
     <h3>
         <?= Html::encode($model->name); ?>
     </h3>
-    <div>
-        <?= mb_strimwidth($model->content, 0, 256, '...', 'UTF-8'); ?>
-        <?= Html::a('Читать далее', ['view', 'id' => $model->id]); ?>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <?= \Yii::$app->formatter->asDate($model->publication_date); ?>
+            <?= $model->subject->name; ?>
+        </div>
+        <div class="panel-body">
+            <?= mb_strimwidth($model->content, 0, 256, '...', 'UTF-8'); ?>
+            <?= Html::a('Читать далее', ['view', 'id' => $model->id]); ?>
+        </div>
     </div>
 </div>

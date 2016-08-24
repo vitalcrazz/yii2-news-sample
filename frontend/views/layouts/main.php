@@ -58,11 +58,25 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+        <div class="row">
+            <div class="col-md-3">
+                <div>
+                    <h3>Календарь</h3>
+                    <?= \frontend\widgets\CalendarList::widget() ?>
+                </div>
+                <div>
+                    <h3>Темы</h3>
+                    <?= \frontend\widgets\SubjectsList::widget() ?>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <?= Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]) ?>
+                <?= Alert::widget() ?>
+                <?= $content ?>
+            </div>
+        </div>
     </div>
 </div>
 

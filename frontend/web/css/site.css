@@ -109,3 +109,13 @@ a.desc:after {
 .nav > li > form > button:hover {
     text-decoration: none;
 }
+
+/* news calendar */
+
+.year-group-item {
+    font-weight: bold;
+}
+
+.month-group-item {
+    padding-left: 20px;
+}
