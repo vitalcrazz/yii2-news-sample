@@ -53,6 +53,12 @@ class News extends \yii\db\ActiveRecord
 
     const COUNT_BY_SUBJECT_CACHE = 'news_count_by_subject';
 
+    /**
+     * Counts news for each subject
+     * Result contains subjects having at least one news
+     *
+     * @return array
+     */
     public static function countBySubjects()
     {
         $countArr = Yii::$app->cache->get(self::COUNT_BY_SUBJECT_CACHE);
@@ -74,14 +80,32 @@ class News extends \yii\db\ActiveRecord
         return $countArr;
     }
 
+    const MONTHS_CACHE = 'news_months';
+
+    /**
+     * Returns all months (with year) having at least one news
+     * and the quantity of news for that month
+     * 
+     * @return array
+     */
     public static function getMonths()
     {
+        $months = Yii::$app->cache->get(self::MONTHS_CACHE);
+        if($months !== false) {
+            return $months;
+        }
+
         $months = (new \yii\db\Query())
             ->select(new Expression('YEAR(publication_date) AS year, MONTH(publication_date) AS month, COUNT(*) AS count'))
             ->from(self::tableName())
             ->groupBy(new Expression('YEAR(publication_date), MONTH(publication_date)'))
             ->orderBy(['year' => SORT_DESC, 'month' => SORT_DESC])
             ->all();
+
+        Yii::$app->cache->set(self::MONTHS_CACHE, $months, 0, new \yii\caching\DbDependency([
+            'sql' => 'SELECT MAX(updated_at) FROM news',
+        ]));
+
         return $months;
     }
 
@@ -93,6 +117,7 @@ class News extends \yii\db\ActiveRecord
         parent::afterDelete();
 
         Yii::$app->cache->delete(self::COUNT_BY_SUBJECT_CACHE);
+        Yii::$app->cache->delete(self::MONTHS_CACHE);
     }
 
     /**
