@@ -13,6 +13,11 @@ class m160822_062747_insert_demo_data extends Migration
             'email' => 'zojl@yandex.ru',
         ]);
 
+        $adminId = Yii::$app->db->lastInsertID;
+
+        $auth = Yii::$app->authManager;
+        $auth->assign($auth->getRole('admin'), $adminId);
+
         $this->batchInsert('{{%subjects}}', ['name'], [
             ['Бизнес'],
             ['Культура'],
