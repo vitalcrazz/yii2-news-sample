@@ -62,11 +62,15 @@ AppAsset::register($this);
             <div class="col-md-3">
                 <div>
                     <h3>Календарь</h3>
-                    <?= \frontend\widgets\CalendarList::widget() ?>
+                    <?= \frontend\widgets\CalendarList::widget([
+                        'models' => \common\models\News::getMonths()
+                    ]) ?>
                 </div>
                 <div>
                     <h3>Темы</h3>
-                    <?= \frontend\widgets\SubjectsList::widget() ?>
+                    <?= \frontend\widgets\SubjectsList::widget([
+                        'models' => \common\models\Subjects::getSubjectsWithNewsCount()
+                    ]) ?>
                 </div>
             </div>
             <div class="col-md-9">

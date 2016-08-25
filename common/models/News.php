@@ -85,7 +85,7 @@ class News extends \yii\db\ActiveRecord
     /**
      * Returns all months (with year) having at least one news
      * and the quantity of news for that month
-     * 
+     *
      * @return array
      */
     public static function getMonths()

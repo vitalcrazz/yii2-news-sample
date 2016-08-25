@@ -23,7 +23,24 @@ class Subjects extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'subjects';
+        return '{{%subjects}}';
+    }
+
+    public static function getSubjectsWithNewsCount()
+    {
+        $subjects = (new \yii\db\Query())
+            ->select(['id', 'name'])
+            ->from(self::tableName())
+            ->orderBy('name')
+            ->all();
+
+        $countArr = \common\models\News::countBySubjects();
+        foreach ($subjects as &$subject) {
+            $key = $subject['id'];
+            $subject['count'] = array_key_exists($key, $countArr) ? $countArr[$key] : 0;
+        }
+
+        return $subjects;
     }
 
     /**
