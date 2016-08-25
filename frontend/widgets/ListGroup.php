@@ -66,9 +66,10 @@ class ListGroup extends \yii\base\Widget
      * @param $name text to be displayed
      * @param $url URL for the item
      * @param bool|integer $badge a number to be displayed in a badge
+     * @param string $class additional class for the item
      * @return string
      */
-    protected function renderItem($name, $url, $badge = false)
+    protected function renderItem($name, $url, $badge = false, $class = '')
     {
         $badgeContent = '';
         if($badge !== false) {
@@ -77,7 +78,11 @@ class ListGroup extends \yii\base\Widget
 
         $itemContent = $badgeContent . $name;
 
-        return Html::a($itemContent, $url, ['class' => 'list-group-item']);
+        $itemClass = 'list-group-item';
+        if(!empty($class)) {
+            $itemClass .= ' ' . $class;
+        }
+        return Html::a($itemContent, $url, ['class' => $itemClass]);
     }
 
     /**

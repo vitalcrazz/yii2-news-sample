@@ -21,7 +21,7 @@ class CalendarList extends \frontend\widgets\ListGroup
         foreach ($this->models as $item) {
             if($year !== $item['year']) {
                 $year = $item['year'];
-                $content .= $this->renderItem($year, ['/news/index', 'year' => $year]);
+                $content .= $this->renderItem($year, ['/news/index', 'year' => $year], false, 'year-group-item');
             }
 
             $date = new \DateTime();
@@ -29,7 +29,7 @@ class CalendarList extends \frontend\widgets\ListGroup
             $monthName = Yii::$app->formatter->asDate($date, 'LLLL');
 
             $url = $this->createUrl($item);
-            $content .= $this->renderItem($monthName, $url, $item['count']);
+            $content .= $this->renderItem($monthName, $url, $item['count'], 'month-group-item');
         }
 
         return $content;
