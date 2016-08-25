@@ -10,5 +10,11 @@ return [
             'assignmentFile' => '@common/rbac/assignments.php',
             'itemFile' => '@common/rbac/items.php',
         ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+            ],
+        ],
     ],
 ];

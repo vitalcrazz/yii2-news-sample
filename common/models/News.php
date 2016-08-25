@@ -126,7 +126,7 @@ class News extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'content', 'publication_date'], 'required'],
+            [['name', 'content', 'publication_date', 'subject_id'], 'required'],
             [['content'], 'string'],
             [['publication_date'], 'safe'],
             [['subject_id', 'author_id'], 'integer'],
