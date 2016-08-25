@@ -3,7 +3,7 @@
 
 1. Склонируйте репозиторий
 2. Выполните `composer install`
-3. Выполните шаги раздела [Preparing application](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md#preparing-application) официального руководства Yii2.
+3. Выполните шаги 2-5 раздела [Preparing application](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md#preparing-application) официального руководства Yii2.
 
 Запуск
 ===============================
